@@ -6,6 +6,7 @@ class App extends React.Component {
     super(props);
     this.state = { ghostpost: [] };
   }
+
   upVoteButton(id) {
     fetch(`http://127.0.0.1:8000/api/post/${id}/up_vote/`, { method: "GET" });
     window.location.reload();
@@ -17,6 +18,17 @@ class App extends React.Component {
     });
     window.location.reload();
   }
+  showBoasts() {
+    fetch("http://127.0.0.1:8000/api/post/boasts/")
+      .then((res) => res.json())
+      .then((data) => this.setState({ ghostpost: data }));
+  }
+
+  showRoasts() {
+    fetch("http://127.0.0.1:8000/api/post/roasts/")
+      .then((res) => res.json())
+      .then((data) => this.setState({ ghostpost: data }));
+  }
 
   componentDidMount() {
     fetch("http://localhost:8000/api/post")
@@ -27,6 +39,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          <button onClick={() => this.showBoasts()}>Boasts</button>
+          &nbsp; &nbsp;
+          <button onClick={() => this.showRoasts()}>Roasts</button>
+        </div>
         <ul>
           {this.state.ghostpost.map((p) => {
             return (
@@ -41,6 +58,7 @@ class App extends React.Component {
                 <button onClick={() => this.downVoteButton(p.id)}>
                   Thumb's Down
                 </button>
+                <hr />
               </div>
             );
           })}
