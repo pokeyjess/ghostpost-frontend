@@ -18,6 +18,11 @@ class App extends React.Component {
     });
     window.location.reload();
   }
+  sortByVotes() {
+    fetch("http://127.0.0.1:8000/api/post/votes/")
+      .then((res) => res.json())
+      .then((data) => this.setState({ ghostpost: data }));
+  }
   showBoasts() {
     fetch("http://127.0.0.1:8000/api/post/boasts/")
       .then((res) => res.json())
@@ -31,7 +36,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/post")
+    fetch("http://127.0.0.1:8000/api/post")
       .then((res) => res.json())
       .then((data) => this.setState({ ghostpost: data }));
   }
@@ -43,6 +48,12 @@ class App extends React.Component {
           <button onClick={() => this.showBoasts()}>Boasts</button>
           &nbsp; &nbsp;
           <button onClick={() => this.showRoasts()}>Roasts</button>
+          &nbsp; &nbsp;
+          <button onClick={() => this.sortByVotes()}>Sort by Votes</button>
+          &nbsp; &nbsp;
+          <button onClick={() => this.componentDidMount()}>
+            All Boasts and Roasts
+          </button>
         </div>
         <ul>
           {this.state.ghostpost.map((p) => {
