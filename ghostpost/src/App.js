@@ -6,12 +6,10 @@ class App extends React.Component {
     super(props);
     this.state = { ghostpost: [] };
   }
-
   upVoteButton(id) {
     fetch(`http://127.0.0.1:8000/api/post/${id}/up_vote/`, { method: "GET" });
     window.location.reload();
   }
-
   downVoteButton(id) {
     fetch(`http://127.0.0.1:8000/api/post/${id}/down_vote/`, {
       method: "GET",
@@ -34,7 +32,6 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => this.setState({ ghostpost: data }));
   }
-
   componentDidMount() {
     fetch("http://127.0.0.1:8000/api/post")
       .then((res) => res.json())
